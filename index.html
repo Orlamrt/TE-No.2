@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <title>IntroPhp7 Grupo X__</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/problemaStem.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Rambla" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<section class="wrapper">
+    <header>
+        <h1 class="logo"><a href="index.html">StemPhp</a></h1>
+    </header>
+    <section id="contenedor">
+        <section class="problema">
+            <h2>Problema: Calcular energía generada por un panel fotovoltaico</h2>
+            <p>Descripción:</p>
+            <p>Se dispone de una placa fotovoltaica de \(80 \, \text{cm} \times 40 \, \text{cm}\), cuyo rendimiento es del 20%. Determinar la cantidad de energía eléctrica (kWh) que generará, para acumular en una batería, si la placa ha estado funcionando durante 12 horas, siendo 
+                el coeficiente de radiación de \(0.9 \, \text{cal/min·cm}^2\). Se admite que no hay pérdidas ni en el transporte ni en la carga de la batería.
+            </p>
+        </section>
+        <section class="formulas">
+            <h2>Fórmulas:</h2>
+            <ul>
+                <li>Energía generada (\(Q\)): \(Q = k \cdot s \cdot t \cdot r\)</li>
+                <li>Conversión a \(kWh\): \(1 \, \text{kWh} = 860 \, \text{kCal}\)</li>
+            </ul>
+        </section>
+        <section class="datos">
+            <h2>Datos:</h2>
+            <ul>
+                <li>Coeficiente de radiación (\(k\)): \(0.9 \, \text{cal/min·cm}^2\)</li>
+                <li>Superficie del panel (\(s\)): \(80 \, \text{cm} \times 40 \, \text{cm} = 3200 \, \text{cm}^2\)</li>
+                <li>Tiempo de exposición (\(t\)): \(12 \, \text{horas} = 720 \, \text{minutos}\)</li>
+                <li>Rendimiento (\(r\)): \(20\% = 0.2\)</li>
+            </ul>
+        </section>
+        <section class="calculos">
+            <h2>Solución:</h2>
+            <?php
+            // Función para calcular la energía generada y su conversión
+            function calcular_energia() {
+                // Datos iniciales
+                $coeficiente_radiacion = 0.9; // cal/min·cm²
+                $superficie_cm2 = 80 * 40; // cm²
+                $tiempo_min = 12 * 60; // minutos
+                $rendimiento = 0.2; // 20%
+
+                // Cálculo de la energía generada en cal
+                $energia_cal = $coeficiente_radiacion * $tiempo_min * $superficie_cm2 * $rendimiento;
+
+                // Conversión a kcal
+                $energia_kcal = $energia_cal / 1000;
+
+                // Conversión a kWh
+                $energia_kwh = $energia_kcal / 860;
+
+                return [
+                    'cal' => $energia_cal,
+                    'kcal' => $energia_kcal,
+                    'kwh' => $energia_kwh
+                ];
+            }
+
+            // Llamada a la función y mostrar los resultados
+            $resultados = calcular_energia();
+            ?>
+            <p>Energía generada en \(cal\): <strong><?php echo number_format($resultados['cal'], 2); ?> cal</strong></p>
+            <p>Energía generada en \(kCal\): <strong><?php echo number_format($resultados['kcal'], 2); ?> kCal</strong></p>
+            <p>Energía generada en \(kWh\): <strong><?php echo number_format($resultados['kwh'], 2); ?> kWh</strong></p>
+        </section>
+        <section class="resultado">
+            <h2>Resultado:</h2>
+            <?php
+            echo "<div id='resultado0'>";
+            echo "<p>El panel genera <strong>" . number_format($resultados['kcal'], 2) . " kCal</strong> de energía, que equivale a <strong>" . number_format($resultados['kwh'], 2) . " kWh</strong>.</p>";
+            echo "</div>";
+            ?>
+        </section>
+    </section>
+    <footer class="pie">
+    </footer>
+</section>
+</body>
+</html>
